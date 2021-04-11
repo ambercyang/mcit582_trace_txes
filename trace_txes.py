@@ -62,12 +62,13 @@ class TXO:
         #YOUR CODE HERE
 
     def get_inputs(self,d=1):
-        for i in range(d):
+        #for i in range(d):
             #self.inputs[d]= from_tx_hash()
             
         
         
-        pass
+        return
+        
         #YOUR CODE HERE
 
 
