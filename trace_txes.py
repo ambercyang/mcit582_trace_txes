@@ -57,7 +57,6 @@ class TXO:
         amount = tx['vout'][0]['value']
         owner = tx['vout'][0]['scriptPubKey']['addresses'][0]
         time = datetime.fromtimestamp(tx['time'])
-        self.inputs = []
         return cls(tx_hash = tx_hash, n=n, amount=amount, owner=owner, time = time)
         #YOUR CODE HERE
 
