@@ -71,7 +71,7 @@ class TXO:
             for j in self.inputs:
                 j.get_inputs(d-1)
         
-        return self
+        return self.inputs
         #YOUR CODE HERE
 
 
