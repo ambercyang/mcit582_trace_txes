@@ -20,7 +20,7 @@ rpc_port='8332'
 rpc_connection = AuthServiceProxy("http://%s:%s@%s:%s"%(rpc_user, rpc_password, rpc_ip, rpc_port))
 
 
-# In[25]:
+# In[92]:
 
 
 ###################################
@@ -52,23 +52,26 @@ class TXO:
     @classmethod
     def from_tx_hash(cls,tx_hash,n=0):
         tx = rpc_connection.getrawtransaction(tx_hash,True)
-        new_obj['tx_hash'] = tx['hash']
-        new_obj['n'] = tx['vout'][0]['n']
-        new_obj['amount'] = tx['vout'][0]['value']
-        new_obj['owner'] = tx['vout'][0]['scriptPubKey']['addresses']
-        new_obj['time'] = datetime.fromtimestamp(tx['time'])
+        tx_hash= tx['hash']
+        n = tx['vout'][0]['n']
+        amount = tx['vout'][0]['value']
+        owner = tx['vout'][0]['scriptPubKey']['addresses'][0]
+        time = datetime.fromtimestamp(tx['time'])
         self.inputs = []
-        return new_obj
+        return cls(tx_hash = tx_hash, n=n, amount=amount, owner=owner, time = time)
         #YOUR CODE HERE
 
     def get_inputs(self,d=1):
-        #for i in range(d):
-            #self.inputs[d]= from_tx_hash()
-            
+        tx = rpc_connection.getrawtransaction(tx_hash,True)
+
+        for i in tx['vin']:
+            if 'txid' in i.keys() and 'vout' in i.keys():
+                self.inputs.append(TXO.from_tx_hash(i['txid'],i['vout']))
+        if d>0:
+            for j in self.inputs:
+                j.get_inputs(d-1)
         
-        
-        return
-        
+        pass
         #YOUR CODE HERE
 
 
