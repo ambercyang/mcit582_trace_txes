@@ -66,9 +66,11 @@ class TXO:
         for i in tx['vin']:
             if 'txid' in i.keys() and 'vout' in i.keys():
                 self.inputs.append(TXO.from_tx_hash(i['txid'],i['vout']))
-        if d>0:
+        depth = d
+        if depth>0:
             for tx in self.inputs:
-                tx.get_inputs(d-1)
+                depth = depth - 1
+                tx.get_inputs(depth)
         
         return self
         #YOUR CODE HERE
